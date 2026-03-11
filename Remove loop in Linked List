@@ -1,0 +1,31 @@
+class Solution:
+    def removeLoop(self, head):
+        slow = head
+        fast = head
+        
+        # Detect cycle
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            
+            if slow == fast:
+                break
+        
+        # If no cycle
+        if fast is None or fast.next is None:
+            return
+        
+        # Move slow to head
+        slow = head
+        
+        # If loop starts at head
+        if slow == fast:
+            while fast.next != slow:
+                fast = fast.next
+        else:
+            while slow.next != fast.next:
+                slow = slow.next
+                fast = fast.next
+        
+        # Remove loop
+        fast.next = None
